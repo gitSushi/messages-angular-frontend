@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Message } from './../models/message';
@@ -16,49 +17,22 @@ export class InboxComponent implements OnInit, OnDestroy {
   msgs!: Message[];
   cols!: any[];
 
-  constructor(private messageService: MessageService) { }
+  myEventSubscription!: BehaviorSubject<Message[]>
+
+  constructor(private messageService: MessageService) {
+    this.myEventSubscription = this.messageService.subject;
+  }
 
   ngOnDestroy(): void {
-    this.messageService
-      .subject
+    this.myEventSubscription
       .unsubscribe();
   }
 
   ngOnInit(): void {
-    // this.messages.splice(0, this.count);
-
-    // this.msgs = this.messageService.getMsg();
-    // console.log(this.msgs);
-
-    // this.messageService.getMsg().then(m => this.msgs = m);
-
-    /**
-     * promise with Loic
-     */
-    // this.messageService
-    //   .getAllMessages()
-    //   .then(m => this.msgs = m)
-    //   .catch(err => console.log(err)
-    //   );
-
-    /**
-     * Observable with Loic
-     */
-    // this.messageService
-    //   .getObservable()
-    //   .subscribe(msgs => this.msgs = msgs)
-
-    this.messageService
-      .subject
+    this.myEventSubscription
       .subscribe(msgs => this.msgs = msgs)
 
     this.messageService.reload()
-
-    /**
-     * LOOK FURTHER INTO Date()
-     */
-    // this.msgs.forEach(m => m.sendAt && console.log(m.sendAt));
-
 
     this.cols = [
       { field: 'from', header: 'From' },
@@ -72,10 +46,6 @@ export class InboxComponent implements OnInit, OnDestroy {
   filter(event: Event) {
     // casting
     let input = event.target as HTMLInputElement;
-
-    // IDEA FOR THE GOVERNMENT
-    // setTimeout(() => { input.checked = false; }, 500)
-
     this.messages.filter(msg => msg.read === input.checked);
 
     console.log(event);

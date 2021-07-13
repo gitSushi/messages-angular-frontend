@@ -107,7 +107,6 @@ export class MessageService {
       })
       .catch(err => {
         console.log(err)
-        this.router.navigate(['messages'])
       })
   }
 
@@ -117,79 +116,19 @@ export class MessageService {
    */
   // getObservable(): Observable<Message[]> {
   //   return this.http
-  //     .get<Message[]>('http://localhost:3000/message')
+  //     .get<Message[]>('http://localhost:3000/messages')
   // }
 
   reload(): void {
     this.http
-      .get<Message[]>('http://localhost:3000/message')
+      .get<Message[]>('http://localhost:3000/messages')
       .toPromise()
       .then(m => this.subject.next(m))
-  }
-
-  getHello() {
-    // return this.http.get('http://localhost:3000/getMessages', {
-    //   headers,
-    //   // observe: 'response',
-    //   responseType: 'json'
-    // }).toPromise();
-    // return this.http.get('http://localhost:3000/getMessages', {
-    //   headers: { 'Access-Control-Allow-Origin': '*' }
-    // }).toPromise();
-    const httpHeaders = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Cache-Control', 'no-cache')
-      .set('Content-Type', 'application/json');
-    const options = { headers: httpHeaders };
-
-    return this.http.get('http://localhost:3000/getMessages', options).toPromise();
-  }
-
-  getMsg() {
-    const httpHeaders = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-    // .set('Cache-Control', 'no-cache')
-    // .set('Content-Type', 'application/json');
-    const options = { headers: httpHeaders };
-
-    return this.http
-      .get<Message[]>("http://localhost:3000/getMessages", options)
-      .toPromise();
   }
 
   getById(id: number): Message | undefined {
     // return this.msg[id];
 
     return this.msg.find(e => e.id === id);
-  }
-
-  create(message: Message): void {
-    const httpHeaders = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Cache-Control', 'no-cache')
-      .set('Content-Type', 'application/json');
-    const options = { headers: httpHeaders };
-
-    this.http
-      .post<Message>("http://localhost:3000/create-message", JSON.stringify(message), options)
-      .toPromise()
-      .then(m => {
-        // Add to list of msgs
-        // will be overwritten at InboxComponent though
-        this.msg.push(m)
-        console.log(this.msg);
-
-        this.router.navigate(['messages']);
-      })
-  }
-
-  getLastId() {
-    const httpHeaders = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-    // .set('Cache-Control', 'no-cache')
-    // .set('Content-Type', 'application/json');
-    const options = { headers: httpHeaders };
-
-    return this.http.get('http://localhost:3000/getLastId', options).toPromise()
   }
 }
