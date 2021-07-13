@@ -1,0 +1,20 @@
+<p-table [value]="msgs">
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-msg>
+    <tr (click)="showDetail(msg.id)">
+      <td *ngFor="let col of cols">
+        <!-- {{ (col.field === "sendAt") ?
+        msg[col.field].toDateString() :
+        msg[col.field] }} -->
+        {{msg[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

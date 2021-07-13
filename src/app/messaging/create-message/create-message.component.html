@@ -1,0 +1,44 @@
+<h5>Pense à écrire à ta Maman</h5>
+<div class="p-grid p-fluid">
+  <div class="p-col-12 p-md-4">
+    <span class="p-float-label">
+      <input type="text" pInputText [(ngModel)]="newMsg.from">
+      <label for="float-input">
+        <h5>From</h5>
+      </label>
+    </span>
+  </div>
+
+  <div class="p-col-12 p-md-4">
+    <span class="p-float-label">
+      <input type="text" pInputText [(ngModel)]="newMsg.to">
+      <label for="float-input">
+        <h5>To</h5>
+      </label>
+    </span>
+  </div>
+
+  <div class="p-col-12 p-md-4">
+    <span class="p-float-label">
+      <input type="text" pInputText [(ngModel)]="newMsg.subject">
+      <label for="float-input">
+        <h5>Subject</h5>
+      </label>
+    </span>
+  </div>
+
+
+  <div class="p-col-12 p-md-4">
+    <span class="p-float-label">
+      <input type="text" pInputText [(ngModel)]="newMsg.body">
+      <label for="float-input">
+        <h5>Body</h5>
+      </label>
+    </span>
+  </div>
+
+  <div class="p-col-12 p-md-4">
+    <button pButton type="button" label="Send" (click)="sendMsg()"></button>
+  </div>
+
+</div>
